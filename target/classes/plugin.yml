@@ -1,0 +1,13 @@
+name: MeConomy
+version: '1.0'
+main: not.mepipe.meconomy.Main
+api-version: 1.16
+authors: [ MePipe ]
+description: Adds a customizable currency system.
+depend: [ Vault ]
+
+commands:
+  pay:
+    description: Pay somebody
+  currency:
+    description: Manage somebody's currency or the plugin config
