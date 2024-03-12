@@ -13,7 +13,7 @@ public class Logger {
 
     public static void send(MessageType type, String message) {
         IndexedHashmap<String, TextColor> map = new IndexedHashmap<>();
-        String prefix = "[Economy Plugin] ";
+        String prefix = "[MeConomy] ";
         if(type == GOOD) {
             map.add(prefix + message, TextColor.color(85, 255, 85));
         } else if(type == BAD) {
@@ -27,7 +27,7 @@ public class Logger {
 
     public static void send(Throwable e) {
         IndexedHashmap<String, TextColor> map = new IndexedHashmap<>();
-        String prefix = "[Economy Plugin] ";
+        String prefix = "[MeConomy] ";
         map.add(prefix + e, TextColor.color(255, 85, 85));
         for (StackTraceElement s : e.getStackTrace()) {
             map.add("\n\t" + s, TextColor.color(255, 85, 85));
