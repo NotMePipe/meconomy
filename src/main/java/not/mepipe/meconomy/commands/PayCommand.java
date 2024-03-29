@@ -25,7 +25,7 @@ import java.util.UUID;
 
 public class PayCommand implements CommandExecutor {
 
-    public Main plugin;
+    private final Main plugin;
     FileConfiguration config = Main.getPlugin().getConfig();
 
     public EconomyCore economy = new EconomyCore();

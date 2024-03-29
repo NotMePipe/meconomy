@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class CurrencyCommand implements CommandExecutor {
 
-    public Main plugin;
+    private Main plugin;
     public EconomyCore economy = new EconomyCore();
     public CurrencyManager manager = CurrencyManager.getInstance(plugin);
 

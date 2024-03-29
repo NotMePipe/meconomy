@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import java.util.UUID;
 
 public class BlockHarvestListener implements Listener {
-    public Main plugin = Main.getPlugin();
+    private final Main plugin = Main.getPlugin();
     FileConfiguration config = plugin.getConfig();
 
     @EventHandler

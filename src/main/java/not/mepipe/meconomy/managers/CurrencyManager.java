@@ -18,7 +18,7 @@ public class CurrencyManager {
 
     public static HashMap<UUID, Integer> currency = new HashMap<>();
 
-    public Main plugin;
+    private final Main plugin;
 
     public static CurrencyManager getInstance(Main plugin) {
         if (manager == null) {

@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class BlockBreakListener implements Listener {
 
-    public Main plugin = Main.getPlugin();
+    private final Main plugin = Main.getPlugin();
     FileConfiguration config = plugin.getConfig();
 
     @EventHandler
