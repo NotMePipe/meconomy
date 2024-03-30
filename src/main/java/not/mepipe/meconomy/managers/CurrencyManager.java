@@ -2,7 +2,6 @@ package not.mepipe.meconomy.managers;
 
 import not.mepipe.meconomy.Main;
 import not.mepipe.meconomy.utils.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.io.*;
@@ -51,14 +50,6 @@ public class CurrencyManager {
 
     public void saveCurrencyFile() {
         File file = getDataFile();
-
-        for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-            UUID uuid = p.getUniqueId();
-            if (currency.get(uuid) != null) {
-                currency.put(uuid, currency.get(uuid));
-            }
-        }
-
         try {
             ObjectOutputStream output = new ObjectOutputStream(new GZIPOutputStream(Files.newOutputStream(file.toPath())));
 
