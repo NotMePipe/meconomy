@@ -14,14 +14,13 @@ import java.util.UUID;
 
 public class EntityDeathListener implements Listener {
 
-    private final Main plugin = Main.getPlugin();
-    FileConfiguration config = plugin.getConfig();
+    private final FileConfiguration config = Main.getPlugin().getConfig();
 
     @EventHandler
     public void onPlayerKillsEntity(EntityDeathEvent e) {
 
         OfflinePlayer p;
-        CurrencyManager manager = CurrencyManager.getInstance(plugin);
+        CurrencyManager manager = CurrencyManager.getInstance();
 
         if(e.getEntity().getKiller() != null) {
             UUID uuid = e.getEntity().getKiller().getUniqueId();

@@ -15,18 +15,15 @@ public class CurrencyManager {
 
     private static CurrencyManager manager = null;
 
-    public static HashMap<UUID, Integer> currency = new HashMap<>();
+    private static HashMap<UUID, Integer> currency = new HashMap<>();
 
-    private final Main plugin;
+    private final Main plugin = Main.getPlugin();
 
-    public static CurrencyManager getInstance(Main plugin) {
+    public static CurrencyManager getInstance() {
         if (manager == null) {
-            manager = new CurrencyManager(plugin);
+            manager = new CurrencyManager();
         }
         return manager;
-    }
-    private CurrencyManager(Main plugin) {
-        this.plugin = plugin;
     }
 
     private File getDataFile() {

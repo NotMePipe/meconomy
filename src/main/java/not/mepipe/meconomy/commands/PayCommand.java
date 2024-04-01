@@ -25,19 +25,17 @@ import java.util.UUID;
 
 public class PayCommand implements CommandExecutor {
 
-    private final Main plugin;
-    FileConfiguration config = Main.getPlugin().getConfig();
+    private final Main plugin = Main.getPlugin();
+    private final FileConfiguration config = plugin.getConfig();
 
-    public EconomyCore economy = new EconomyCore();
+    private final EconomyCore economy = new EconomyCore();
 
-    public PayCommand(Main plugin) {
-        this.plugin = plugin;
-
+    public PayCommand() {
         Objects.requireNonNull(plugin.getCommand("pay")).setExecutor(this);
         Objects.requireNonNull(plugin.getCommand("pay")).setTabCompleter(new TabComplete());
     }
 
-    class TabComplete implements TabCompleter {
+    static class TabComplete implements TabCompleter {
 
         @Override
         public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -53,7 +51,7 @@ public class PayCommand implements CommandExecutor {
                 amounts.add("1");
                 if (sender instanceof Player) {
                     OfflinePlayer player = (OfflinePlayer) sender;
-                    amounts.add(String.valueOf(CurrencyManager.getInstance(plugin).getPlayerCurrency(player)));
+                    amounts.add(String.valueOf(CurrencyManager.getInstance().getPlayerCurrency(player)));
                 }
 
                 return amounts;

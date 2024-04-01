@@ -13,15 +13,14 @@ import java.util.UUID;
 
 public class FishingListener implements Listener {
 
-    private final Main plugin = Main.getPlugin();
-    FileConfiguration config = plugin.getConfig();
+    private final FileConfiguration config = Main.getPlugin().getConfig();
 
     @EventHandler
     public void onPlayerFishes(PlayerFishEvent e) {
         if (e.getCaught() != null) {
             UUID uuid = e.getPlayer().getUniqueId();
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            CurrencyManager manager = CurrencyManager.getInstance(plugin);
+            CurrencyManager manager = CurrencyManager.getInstance();
 
             manager.addCurrencyToPlayer(p, config.getInt("fishing"));
         }

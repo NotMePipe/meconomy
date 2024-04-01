@@ -2,7 +2,6 @@ package not.mepipe.meconomy.utils;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-import not.mepipe.meconomy.Main;
 import not.mepipe.meconomy.managers.CurrencyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -13,7 +12,7 @@ import java.util.Objects;
 
 public class EconomyCore implements Economy {
 
-    private final CurrencyManager manager = CurrencyManager.getInstance(Main.getPlugin());
+    private final CurrencyManager manager = CurrencyManager.getInstance();
 
     @Override
     public boolean isEnabled() {

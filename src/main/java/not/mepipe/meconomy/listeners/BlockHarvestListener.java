@@ -14,15 +14,14 @@ import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import java.util.UUID;
 
 public class BlockHarvestListener implements Listener {
-    private final Main plugin = Main.getPlugin();
-    FileConfiguration config = plugin.getConfig();
+    private final FileConfiguration config = Main.getPlugin().getConfig();
 
     @EventHandler
     public void onPlayerHarvestBlock(PlayerHarvestBlockEvent e) {
         Block blockHarvested = e.getHarvestedBlock();
         UUID uuid = e.getPlayer().getUniqueId();
         OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-        CurrencyManager manager = CurrencyManager.getInstance(plugin);
+        CurrencyManager manager = CurrencyManager.getInstance();
 
         if (blockHarvested.getBlockData() instanceof Ageable) {
             if (config.contains("crop." + blockHarvested.getType().name().toLowerCase() + ".stage" + ((Ageable) blockHarvested.getBlockData()).getAge())) {

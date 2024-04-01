@@ -25,14 +25,12 @@ import java.util.Objects;
 
 public class CurrencyCommand implements CommandExecutor {
 
-    private Main plugin;
-    public EconomyCore economy = new EconomyCore();
-    public CurrencyManager manager = CurrencyManager.getInstance(plugin);
+    private final Main plugin = Main.getPlugin();
+    private final EconomyCore economy = new EconomyCore();
+    private final CurrencyManager manager = CurrencyManager.getInstance();
 
 
-    public CurrencyCommand(Main plugin) {
-        this.plugin = plugin;
-
+    public CurrencyCommand() {
         Objects.requireNonNull(plugin.getCommand("currency")).setExecutor(this);
         Objects.requireNonNull(plugin.getCommand("currency")).setTabCompleter(new TabComplete());
     }

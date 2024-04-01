@@ -17,6 +17,8 @@ public final class Main extends JavaPlugin {
 
     private static Main plugin;
 
+    public static final String name = "MeConomy";
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -51,18 +53,17 @@ public final class Main extends JavaPlugin {
     }
 
     public void saveData() {
-        CurrencyManager currencyManager = CurrencyManager.getInstance(this);
-        currencyManager.saveCurrencyFile();
+        CurrencyManager.getInstance().saveCurrencyFile();
     }
 
     public void registerManagers() {
-        CurrencyManager currencyManager = CurrencyManager.getInstance(this);
+        CurrencyManager currencyManager = CurrencyManager.getInstance();
         currencyManager.loadCurrencyFile();
     }
 
     public void registerCommands() {
-        new PayCommand(this);
-        new CurrencyCommand(this);
+        new PayCommand();
+        new CurrencyCommand();
     }
 
     public void registerListeners() {

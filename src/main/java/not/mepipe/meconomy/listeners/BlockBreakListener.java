@@ -19,14 +19,14 @@ import java.util.UUID;
 public class BlockBreakListener implements Listener {
 
     private final Main plugin = Main.getPlugin();
-    FileConfiguration config = plugin.getConfig();
+    private final FileConfiguration config = plugin.getConfig();
 
     @EventHandler
     public void onPlayerBreakBlock(BlockBreakEvent e) {
         Block blockBroken = e.getBlock();
         UUID uuid = e.getPlayer().getUniqueId();
         OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-        CurrencyManager manager = CurrencyManager.getInstance(plugin);
+        CurrencyManager manager = CurrencyManager.getInstance();
         if (blockBroken.getBlockData() instanceof Ageable) {
             if (config.contains("crop." + blockBroken.getType().name().toLowerCase() + ".stage" + ((Ageable) blockBroken.getBlockData()).getAge())) {
                 manager.addCurrencyToPlayer(p, config.getInt("crop." + blockBroken.getType().name().toLowerCase() + ".stage" + ((Ageable) blockBroken.getBlockData()).getAge()));
