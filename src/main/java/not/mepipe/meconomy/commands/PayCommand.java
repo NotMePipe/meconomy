@@ -3,10 +3,8 @@ package not.mepipe.meconomy.commands;
 import net.kyori.adventure.text.format.TextColor;
 import not.mepipe.meconomy.Main;
 import not.mepipe.meconomy.managers.CurrencyManager;
-import not.mepipe.meconomy.utils.EconomyCore;
-import not.mepipe.meconomy.utils.ChatComponent;
-import not.mepipe.meconomy.utils.Helpers;
-import not.mepipe.meconomy.utils.IndexedHashmap;
+import not.mepipe.meconomy.utils.*;
+import not.mepipe.memail.managers.MailManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -74,7 +72,7 @@ public class PayCommand implements CommandExecutor {
             sender.sendMessage(ChatComponent.build(message));
             return true;
         } else if(args.length == 2) {
-            OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+            OfflinePlayer p = Bukkit.getOfflinePlayer(Objects.requireNonNull(UUIDFetcher.getUUID(args[0])));
 
             int amount = Helpers.parseInt(args[1]);
             UUID uuid;
@@ -110,7 +108,11 @@ public class PayCommand implements CommandExecutor {
                     message.add("$" + (int) economy.getBalance(p), TextColor.color(255, 85, 255));
                     Objects.requireNonNull(p.getPlayer()).sendMessage(ChatComponent.build(message));
                 } else {
-                    if(config.getString("offlinepaymessage") != null) {
+                    if (Main.getPlugin().meMailEnabled && config.getBoolean("use-memail")) {
+                        String time = Helpers.getTime(System.currentTimeMillis(), -4); // -4 is EST
+                        String offlineMessage = time + " MeConomy: " + self.getName() + " has paid you $" + amount;
+                        MailManager.getInstance().addMailToPlayer(p, offlineMessage);
+                    } else if(config.getString("offlinepaymessage") != null) {
                         message.add(config.getString("offlinepaymessage"), TextColor.color(85, 85, 255));
                         Objects.requireNonNull(self.getPlayer()).sendMessage(ChatComponent.build(message));
                     }

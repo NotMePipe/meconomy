@@ -19,6 +19,8 @@ public final class Main extends JavaPlugin {
 
     public static final String name = "MeConomy";
 
+    public boolean meMailEnabled;
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -32,10 +34,31 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        meMailEnabled = setupMeMail();
+
         Logger.send(Logger.MessageType.GOOD, "Economy registered successfully");
 
         registerCommands();
         Logger.send(Logger.MessageType.GOOD, "Plugin initialized!");
+    }
+
+    private boolean setupMeMail() {
+        if (getServer().getPluginManager().getPlugin("MeMail") == null) {
+            Logger.send(Logger.MessageType.INFO, "MeMail not found");
+            return false;
+        } else {
+            Logger.send(Logger.MessageType.INFO, "MeMail found in plugins folder");
+        }
+
+        if (!config.getBoolean("use-memail")) {
+            Logger.send(Logger.MessageType.INFO, "MeMail disabled in config");
+            return false;
+        } else {
+            Logger.send(Logger.MessageType.INFO, "Enabled MeMail");
+        }
+
+        return true;
     }
 
     private boolean setupEconomy() {

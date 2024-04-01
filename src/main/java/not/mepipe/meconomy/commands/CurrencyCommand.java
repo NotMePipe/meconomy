@@ -3,10 +3,7 @@ package not.mepipe.meconomy.commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import not.mepipe.meconomy.Main;
-import not.mepipe.meconomy.utils.EconomyCore;
-import not.mepipe.meconomy.utils.ChatComponent;
-import not.mepipe.meconomy.utils.Helpers;
-import not.mepipe.meconomy.utils.IndexedHashmap;
+import not.mepipe.meconomy.utils.*;
 import not.mepipe.meconomy.managers.CurrencyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -76,7 +73,7 @@ public class CurrencyCommand implements CommandExecutor {
                                     }
                                 }
                             } else if(args.length == 4) {
-                                if (args[1].equalsIgnoreCase("set") && !args[2].equals("offlinepaymessage")) {
+                                if (args[1].equalsIgnoreCase("set") && !args[2].equals("offlinepaymessage") && !args[2].equals("use-memail")) {
                                     FileConfiguration config = plugin.getConfig();
                                     int max = 0;
                                     for (String key : config.getKeys(true)) {
@@ -132,7 +129,7 @@ public class CurrencyCommand implements CommandExecutor {
                     sender.sendMessage(ChatComponent.build(message));
                 }
             } else if(args.length == 2) {
-                OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
+                OfflinePlayer p = Bukkit.getOfflinePlayer(Objects.requireNonNull(UUIDFetcher.getUUID(args[1])));
 
                 if (args[0].equalsIgnoreCase("get")) {
                     message.add("Player ", TextColor.color(85, 255, 255));
@@ -163,7 +160,7 @@ public class CurrencyCommand implements CommandExecutor {
                 }
             } else if(args.length == 3) {
                 if (!args[0].equalsIgnoreCase("config")) {
-                    OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(Objects.requireNonNull(UUIDFetcher.getUUID(args[1])));
                     int amount = Helpers.parseInt(args[2]);
                     if (args[0].equalsIgnoreCase("set")) {
                         manager.setPlayerCurrency(p, amount);
@@ -192,6 +189,8 @@ public class CurrencyCommand implements CommandExecutor {
                         if(plugin.getConfig().get(args[2]) != null) {
                             if(args[2].equalsIgnoreCase("offlinepaymessage")) {
                                 message.add("Path offlinepaymessage is \"" + plugin.getConfig().get(args[2]) + "\"", TextColor.color(85, 255, 85));
+                            } else if (args[2].equalsIgnoreCase("use-memail")) {
+                                message.add("Path use-memail is " + plugin.getConfig().getBoolean(args[2]), TextColor.color(85, 255, 85));
                             } else {
                                 message.add("Path " + args[2] + " is $" + plugin.getConfig().getInt(args[2]), TextColor.color(85, 255, 85));
                             }
@@ -214,7 +213,7 @@ public class CurrencyCommand implements CommandExecutor {
                             message.add("Path offlinepaymessage set to \"" + plugin.getConfig().get(args[2]) + "\"", TextColor.color(85, 255, 85));
                             sender.sendMessage(ChatComponent.build(message));
                             plugin.saveConfig();
-                        } else {
+                        } else if (!args[2].equalsIgnoreCase("use-memail")) {
                             if(args.length == 4) {
                                 if (plugin.getConfig().get(args[2]) != null) {
                                     plugin.getConfig().set(args[2], Helpers.parseInt(args[3]));
@@ -229,6 +228,9 @@ public class CurrencyCommand implements CommandExecutor {
                                 message.add("Invalid argument", TextColor.color(255, 85, 85));
                                 sender.sendMessage(ChatComponent.build(message));
                             }
+                        } else {
+                            message.add("Path use-memail cannot be set while the server is on", TextColor.color(255, 85, 85));
+                            sender.sendMessage(ChatComponent.build(message));
                         }
                     } else {
                         message.add("/currency config set <path> <value>\n", TextColor.color(255, 85, 85));

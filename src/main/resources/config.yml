@@ -185,3 +185,5 @@ fishing: 2
 
 #Message that is sent to the player whenever they pay somebody who is offline.
 offlinepaymessage: Don't forget to inform that player that you have paid them.
+
+use-memail: true
