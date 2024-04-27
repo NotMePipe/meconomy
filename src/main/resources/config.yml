@@ -177,6 +177,13 @@ entity:
   tadpole: 0
   warden: 15
 
+#1.20 Mobs
+  camel: 0
+  sniffer: 0
+
+#1.20.5 Mobs
+  armadillo: 0
+
 #Ignored mobs
   giant: 0
   armor_stand: 0
